@@ -2,7 +2,7 @@
 
 | Language              | time   |
 | --                    | --     |
-| NASM                  | 330 ms |
+| NASM                  | 328 ms |
 | Clojure (native call) | 336 ms |
 | Jena (native call)    | 350 ms |
 | Rust                  | 354 ms |
