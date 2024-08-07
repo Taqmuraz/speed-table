@@ -3,6 +3,7 @@
 | Language                | time   |
 | --                      | --     |
 | Clojure (native + repl) | 238 ms |
+| Jython (native call)    | 263 ms |
 | NASM                    | 328 ms |
 | Clojure (native call)   | 336 ms |
 | Java                    | 340 ms |

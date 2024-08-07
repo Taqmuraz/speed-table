@@ -1,4 +1,6 @@
-jc = javaClass =>
-int = jc "java.lang.Integer" =>
-res = jc "java.util.stream.LongStream".range [int, int] [0 1000000000] =>
-println res
+time = java.lang.System.currentTimeMillis [] =>
+start = time() =>
+long = java.lang.Long =>
+sum = java.util.stream.LongStream.range [long, long] [0, 1000000000] .sum [] () =>
+end = time() =>
+print "Sum = " sum ", time = " (end - start) " ms" line
