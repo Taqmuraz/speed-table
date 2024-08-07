@@ -12,4 +12,5 @@
 | C#                    | 2 sec  |
 | Clojure               | 6 sec  |
 | Jena                  | 11 sec |
+| Jython                | 18 sec |
 | CPython               | 24 sec |
