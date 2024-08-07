@@ -1,0 +1,4 @@
+jc = javaClass =>
+int = jc "java.lang.Integer" =>
+res = jc "java.util.stream.LongStream".range [int, int] [0 1000000000] =>
+println res
