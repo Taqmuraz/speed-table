@@ -1,99 +1,62 @@
-section .bss
-    sum resq 1
-    start_time resq 1
-    end_time resq 1
-
 section .data
-    msg db "Sum: ", 0
-    msg_len equ $ - msg
-    new_line db 10, 0
-    new_line_len equ $ - new_line
+    msg db "Sum: ", 0       ; Сообщение перед суммой
+    msg_len equ $ - msg      ; Длина сообщения
+
+section .bss
+    result resb 20          ; Резервируем место для строки с результатом
 
 section .text
     global _start
-    extern write
 
 _start:
-    ; Получить аргумент командной строки
-    mov rdi, [rsp+8]         ; Получить указатель на аргумент командной строки
-    add rdi, 8               ; Пропустить имя программы
-    mov rsi, [rdi]           ; Получить указатель на строку аргумента
-    call atoi                ; Преобразовать строку в число
+    ; Инициализация
+    mov rax, 0              ; Сумма
+    mov rbx, 1              ; Начальное значение
 
-    ; Начать замер времени
-    call get_time
-    mov [start_time], rax
-
-    ; Сложить числа от 1 до N
-    mov rbx, rax             ; rbx = N
-    xor rax, rax             ; rax = 0
-    xor rcx, rcx             ; rcx = i
-
+    ; Цикл от 1 до 1000000000
 .loop:
-    inc rcx                  ; i++
-    add rax, rcx             ; sum += i
-    cmp rcx, rbx             ; Сравнить i с N
-    jl .loop                 ; Если i < N, перейти к .loop
+    add rax, rbx            ; Добавляем текущее значение к сумме
+    inc rbx                 ; Увеличиваем текущее значение
+    cmp rbx, 1000000000     ; Сравниваем с 1000000000
+    jle .loop               ; Если меньше или равно, продолжаем цикл
 
-    ; Сохранить результат
-    mov [sum], rax
+    ; Преобразуем число в строку
+    mov rdi, result         ; Адрес буфера для результата
+    call int_to_str         ; Вызов функции преобразования
 
-    ; Закончить замер времени
-    call get_time
-    mov [end_time], rax
+    ; Выводим сообщение
+    mov rax, 1              ; Системный вызов write
+    mov rdi, 1              ; Дескриптор файла stdout
+    mov rsi, msg            ; Адрес сообщения
+    mov rdx, msg_len        ; Длина сообщения
+    syscall                 ; Выполнение системного вызова
 
-    ; Рассчитать время выполнения
-    mov rax, [end_time]
-    sub rax, [start_time]
+    ; Выводим результат
+    mov rax, 1              ; Системный вызов write
+    mov rdi, 1              ; Дескриптор файла stdout
+    mov rsi, result         ; Адрес строки с результатом
+    mov rdx, 20             ; Длина строки с результатом (можно улучшить)
+    syscall                 ; Выполнение системного вызова
 
-    ; Напечатать сообщение
-    mov rdi, 1               ; file descriptor: stdout
-    mov rsi, msg             ; указатель на сообщение
-    mov rdx, msg_len         ; размер сообщения
-    mov rax, 1               ; системный вызов: sys_write
-    syscall
+    ; Завершение программы
+    mov rax, 60             ; Системный вызов exit
+    xor rdi, rdi            ; Код выхода 0
+    syscall                 ; Выполнение системного вызова
 
-    ; Напечатать результат
-    mov rsi, sum             ; указатель на результат
-    mov rdx, 8               ; размер данных для вывода
-    mov rax, 1               ; системный вызов: sys_write
-    syscall
-
-    ; Напечатать новую строку
-    mov rsi, new_line        ; указатель на новую строку
-    mov rdx, new_line_len    ; размер новой строки
-    mov rax, 1               ; системный вызов: sys_write
-    syscall
-
-    ; Завершить программу
-    mov rax, 60              ; Номер системного вызова для выхода
-    xor rdi, rdi             ; Код выхода 0
-    syscall
-
-; Функция atoi
-atoi:
-    xor rax, rax             ; rax = 0
-    xor rcx, rcx             ; rcx = 0
-.atoi_loop:
-    movzx rdx, byte [rsi + rcx]
-    test rdx, rdx
-    jz .atoi_done
-    sub rdx, '0'
-    imul rax, rax, 10
-    add rax, rdx
-    inc rcx
-    jmp .atoi_loop
-.atoi_done:
+; Функция для преобразования числа в строку
+; Вход: rax - число
+; Выход: rdi - адрес строки
+int_to_str:
+    mov rbx, 10             ; Основание системы счисления (10)
+    mov rcx, rdi            ; Адрес буфера
+    add rcx, 19             ; Переместить указатель в конец буфера
+    mov byte [rcx], 0       ; Нулевой байт в конце строки
+.reverse_loop:
+    dec rcx                 ; Переместиться назад
+    xor rdx, rdx            ; Обнулить rdx
+    div rbx                 ; Разделить число на основание
+    add dl, '0'             ; Преобразовать в ASCII
+    mov [rcx], dl           ; Сохранить цифру в строке
+    test rax, rax           ; Проверить, остались ли цифры
+    jnz .reverse_loop       ; Если да, продолжить цикл
     ret
-
-; Функция get_time
-get_time:
-    mov rax, 228             ; Номер системного вызова clock_gettime
-    mov rdi, 0               ; CLOCK_REALTIME
-    lea rsi, [rel ts]
-    syscall
-    mov rax, [ts]
-    ret
-
-section .bss
-    ts resq 2

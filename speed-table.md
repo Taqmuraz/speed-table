@@ -1,7 +1,9 @@
 ##  Sorted table
 
-| Clojure (native call) | 336 ms |
+| Language              | time   |
 | --                    | --     |
+| NASM                  | 330 ms |
+| Clojure (native call) | 336 ms |
 | Jena (native call)    | 350 ms |
 | Rust                  | 354 ms |
 | Java                  | 395 ms |
