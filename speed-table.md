@@ -25,7 +25,7 @@ Linux 64bit tests
 
 | Language                  | time     |
 | --                        | --       |
-| Rust (| instead of +)     | 119 ms   |
+| Rust (\| instead of +)     | 119 ms   |
 | Go                        | 237 ms   |
 | C with -O3 (GNU compiler) | 237 ms   |
 | NASM                      | 238 ms   |
