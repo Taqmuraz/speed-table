@@ -1,0 +1,6 @@
+time = java.lang.System.currentTimeMillis [] =>
+meas = () -> s = time() =>
+  r = 1000000000.times.pipe 0 + =>
+  e = time() =>
+  print "sum = " r " time " (e - s) " sec" line =>
+10.times .map meas .collect ()

@@ -20,5 +20,5 @@ int main(int argc, char** argv)
         sum += i;
     }
     long long int total = time_ms() - start;
-    printf("time = %lld ms, sum = %lld", total, sum);
+    printf("time = %lld ms, sum = %lld\n", total, sum);
 }

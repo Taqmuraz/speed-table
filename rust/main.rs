@@ -10,16 +10,17 @@ fn ms() -> u128 {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        eprintln!("Usage: {} <n>", args[0]);
+    if args.len() != 3 {
+        eprintln!("Usage: {} <a> <n>", args[0]);
         return;
     }
-    let n: i64 = args[1].parse().expect("Invalid number");
+    let a: i64 = args[1].parse().expect("Invalid number");
+    let n: i64 = args[2].parse().expect("Invalid number");
     let start = ms();
 
     let mut sum :i64 = 0;
-    for i in 0..n {
-        sum += i;
+    for i in a..n {
+        sum |= i;
     }
     let end = ms();
     
