@@ -1,3 +1,4 @@
+; written by https://andreyor.st
 (defn test [] (time
     (loop [acc 0 x 1]
       (if (< x 1000000000)
