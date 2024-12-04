@@ -1,39 +1,14 @@
-##  Sorted table
+Linux **64bit**, **1.1 GHz** CPU, **4GB** RAM
 
-Windows 64bit tests
-
-| Language                | time   |
-| --                      | --     |
-| Clojure (native + repl) | 238 ms |
-| Jython (native call)    | 263 ms |
-| NASM                    | 328 ms |
-| Clojure (native call)   | 336 ms |
-| Java                    | 340 ms |
-| Jena (native call)      | 350 ms |
-| Rust                    | 354 ms |
-| C with -O3              | 473 ms |
-| Go                      | 475 ms |
-| pypy                    | 540 ms |
-| C                       | 779 ms |
-| C#                      | 2 sec  |
-| Clojure                 | 6 sec  |
-| Jena                    | 11 sec |
-| Jython                  | 18 sec |
-| CPython                 | 24 sec |
-
-Linux 64bit tests
-
-| Language                  | time     |
-| --                        | --       |
-| Rust (\| instead of +)     | 119 ms   |
-| Go                        | 237 ms   |
-| C with -O3 (GNU compiler) | 237 ms   |
-| NASM                      | 238 ms   |
-| Java                      | 240 ms   |
-| Clojure (native call)     | 241 ms   |
-| pypy                      | 474 ms   |
-| Common Lisp (SBCL)        | 1.1 sec  |
-| Clojure                   | 5.5 sec  |
-| CPython                   | 7.6 sec  |
-| Jena                      | 9.2 sec  |
-| Ruby                      | 12.7 sec |
+| Language | compiler/version/args  | time     |
+| --         | --                   | --       |
+|Rust (**bitwise or** instead of **+**)|rustc 1.75.0 with -O3 | 167 ms |
+| C | gcc 11.4.0 with -O3     | 335 ms   |
+| NASM | 2.15.05              | 339 ms   |
+| Go | 1.18.1                 | 340 ms   |
+| Java | 17.0.13              | 345 ms   |
+| Clojure | 1.10.2            | 373 ms  |
+| Common Lisp | SBCL 2.1.11   | 1 sec  |
+| Python 3 | pypy 3.8.13        | 1.6 sec  |
+| Python 3 | cpython 3.10.12    | 26  sec  |
+| Ruby | 3.0.2p107            | 38  sec |
